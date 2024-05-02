@@ -1,5 +1,5 @@
 [self]
-name = "my-rust-template"
+name = "my_rust_template"
 version = "0.1.0"
 description = "A rust ci/cd template for github"
 license = "MPL-2.0"
