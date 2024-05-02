@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: CC0-1.0 OR MIT OR Apache-2.0
-// -> todo! remove this notice
+// SPDX-License-Identifier: MPL-2.0
+// SPDX-FileCopyrightText: Copyright (c) AmeKnite
 
 //! Documentation for the crate: A rust ci/cd templates
 fn main() {
