@@ -1,11 +1,11 @@
 [package]
-name = "my_rust_template"                                   # todo!("Change name")
-description = "A rust ci/cd template for github"            # todo!("Change description")
-version = "0.1.0"                                           # todo!("Change version")
+name = "ame_rust_template"                                   # todo!("Change name")
+description = "A rust ci/cd template for github"             # todo!("Change description")
+version = "0.1.0"
 edition = "2021"
-license = "MPL-2.0"                                         # todo!("Change licenses")
-repository = "https://github.com/ameknite/my-rust-template" # todo!("Change repository")
-rust-version = "1.59.0"                                     # todo!("Change MSRV")
+license = "MPL-2.0"
+repository = "https://github.com/ameknite/ame-rust-template" # todo!("Change repository")
+rust-version = "1.59.0"                                      # todo!("Change MSRV")
 
 [dependencies]
 
