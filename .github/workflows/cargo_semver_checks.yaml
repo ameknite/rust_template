@@ -67,7 +67,7 @@ jobs:
       - name: Run cargo bump
         if: ${{ inputs.bump-version || inputs.release_type != 'none'}}
         run: cargo bump ${{ inputs.bump-version || inputs.release_type}}
-      
+
       - name: Install cargo-semver-checks
         uses: taiki-e/install-action@v2
         with:
