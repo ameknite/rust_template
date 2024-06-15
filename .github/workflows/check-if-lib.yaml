@@ -5,8 +5,7 @@ on:
     outputs: 
       is_lib: 
         value: ${{ jobs.check-if-lib.outputs.is_lib }}
-
-
+        
 jobs:
   check-if-lib:
     runs-on: ubuntu-latest
