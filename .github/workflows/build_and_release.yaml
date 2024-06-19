@@ -147,7 +147,7 @@ jobs:
       - run: git pull
 
       - uses: mukunku/tag-exists-action@v1.6.0
-        if: ${{ inputs.release_type == 'none' }}
+        if: ${{ !inputs.version && inputs.release_type == 'none' }}
         id: check-tag-none
         with:
           tag: ${{  needs.get-version.outputs.tag_version }}
