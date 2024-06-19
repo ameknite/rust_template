@@ -161,6 +161,7 @@ jobs:
           git push -d origin ${{  needs.get-version.outputs.tag_version }}
 
       - uses: mukunku/tag-exists-action@v1.6.0
+        if: ${{ inputs.release_type == 'none' && steps.check-tag.outputs.exists == 'true' }}
         id: check-tag-2
         with:
           tag: ${{  needs.get-version.outputs.tag_version }}
