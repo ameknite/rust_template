@@ -137,8 +137,25 @@ jobs:
     with:
       commit_message: ${{ needs.get-version.outputs.crate_version }}
 
-  create-tag:
+  delete-tag:
+    if: ${{ inputs.release_type == 'none' }}
     needs: [get-version, update-attribution]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Repository
+        uses: actions/checkout@v4
+
+      - run: git pull
+
+      - name: Delete tag
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git tag -d ${{ needs.get-version.outputs.tag_version }}
+          git push -d origin ${{  needs.get-version.outputs.tag_version }}
+
+  create-tag:
+    needs: [get-version, update-attribution, delete-tag]
     runs-on: ubuntu-latest
     steps:
       - name: Fetch Repository
