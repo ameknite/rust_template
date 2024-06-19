@@ -20,8 +20,14 @@ jobs:
     outputs:
       date: ${{ steps.get-date.outputs.date }}
 
-  run-cargo-update:
+  run-add-notice:
     needs: [get-current-date, run-ci]
+    uses: ./.github/workflows/add_notice.yaml
+    with:
+      commit_message: ${{ needs.get-current-date.outputs.date }}
+
+  run-cargo-update:
+    needs: [get-current-date, run-add-notice]
     uses: ./.github/workflows/cargo_update.yaml
     with:
       commit_message: ${{ needs.get-current-date.outputs.date }}
