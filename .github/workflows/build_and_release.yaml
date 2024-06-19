@@ -147,12 +147,13 @@ jobs:
       - run: git pull
 
       - uses: mukunku/tag-exists-action@v1.6.0
-        id: check-tag
+        if: ${{ inputs.release_type == 'none' }}
+        id: check-tag-none
         with:
           tag: ${{  needs.get-version.outputs.tag_version }}
 
       - name: Delete tag
-        if: ${{ inputs.release_type == 'none' && steps.check-tag.outputs.exists == 'true' }}
+        if: ${{ steps.check-tag-none.outputs.exists == 'true' }}
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
@@ -161,13 +162,12 @@ jobs:
           git push -d origin ${{  needs.get-version.outputs.tag_version }}
 
       - uses: mukunku/tag-exists-action@v1.6.0
-        if: ${{ inputs.release_type == 'none' && steps.check-tag.outputs.exists == 'true' }}
-        id: check-tag-2
+        id: check-tag
         with:
           tag: ${{  needs.get-version.outputs.tag_version }}
 
       - name: Create tag
-        if: steps.check-tag-2.outputs.exists == 'false'
+        if: steps.check-tag.outputs.exists == 'false'
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
