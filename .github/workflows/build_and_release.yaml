@@ -20,8 +20,6 @@ on:
           - major
       check-to-publish:
         type: boolean
-      update-msrv:
-        type: boolean
   workflow_call:
     inputs:
       version:
@@ -30,8 +28,6 @@ on:
       release_type:
         type: string
       check-to-publish:
-        type: boolean
-      update-msrv:
         type: boolean
 
 jobs:
