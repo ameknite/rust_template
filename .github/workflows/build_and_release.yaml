@@ -175,7 +175,7 @@ jobs:
   #         git push origin ${{  needs.get-version.outputs.tag_version }}
 
   create-release:
-    needs: [get-version, create-tag]
+    needs: [get-version]
     runs-on: ubuntu-latest
     steps:
       - name: Fetch Repository
