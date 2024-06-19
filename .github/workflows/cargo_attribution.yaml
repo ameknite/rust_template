@@ -1,5 +1,8 @@
 name: Update Attributions
 
+permissions:
+  contents: write
+
 on:
   workflow_call:
     inputs:

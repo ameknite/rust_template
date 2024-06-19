@@ -1,5 +1,8 @@
 name: Weekly Updates
 
+permissions:
+  contents: write
+
 on:
   schedule:
     - cron: "0 0 * * 6"
