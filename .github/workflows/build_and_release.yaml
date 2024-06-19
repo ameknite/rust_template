@@ -137,46 +137,45 @@ jobs:
   #   with:
   #     commit_message: ${{ needs.get-version.outputs.crate_version }}
 
-  # create-tag:
-  #   needs: [get-version]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Fetch Repository
-  #       uses: actions/checkout@v4
+  create-tag:
+    needs: [get-version]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Repository
+        uses: actions/checkout@v4
 
-  #     - run: git pull
+      - run: git pull
 
-  #     - uses: mukunku/tag-exists-action@v1.6.0
-  #       if: ${{ inputs.release_type == 'none' }}
-  #       id: check-tag-none
-  #       with:
-  #         tag: ${{  needs.get-version.outputs.tag_version }}
+      - uses: mukunku/tag-exists-action@v1.6.0
+        if: ${{ inputs.release_type == 'none' }}
+        id: check-tag-none
+        with:
+          tag: ${{  needs.get-version.outputs.tag_version }}
 
-  #     - name: Delete tag
-  #       if: ${{ steps.check-tag-none.outputs.exists == 'true' }}
-  #       run: |
-  #         git config user.name github-actions
-  #         git config user.email github-actions@github.com
-  #         git fetch --tags
-  #         git tag -d ${{ needs.get-version.outputs.tag_version }}
-  #         git push -d origin ${{  needs.get-version.outputs.tag_version }}
+      - name: Delete tag
+        if: ${{ steps.check-tag-none.outputs.exists == 'true' }}
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git fetch --tags
+          git tag -d ${{ needs.get-version.outputs.tag_version }}
+          git push -d origin ${{  needs.get-version.outputs.tag_version }}
 
-  #     - uses: mukunku/tag-exists-action@v1.6.0
-  #       id: check-tag
-  #       with:
-  #         tag: ${{  needs.get-version.outputs.tag_version }}
+      - uses: mukunku/tag-exists-action@v1.6.0
+        id: check-tag
+        with:
+          tag: ${{  needs.get-version.outputs.tag_version }}
 
-  #     - name: Create tag
-  #       if: steps.check-tag.outputs.exists == 'false'
-  #       run: |
-  #         git config user.name github-actions
-  #         git config user.email github-actions@github.com
-  #         git tag ${{ needs.get-version.outputs.tag_version }}
-  #         git push origin ${{  needs.get-version.outputs.tag_version }}
+      - name: Create tag
+        if: steps.check-tag.outputs.exists == 'false'
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git tag ${{ needs.get-version.outputs.tag_version }}
+          git push origin ${{  needs.get-version.outputs.tag_version }}
 
   create-release:
-    # needs: [get-version, create-tag]
-    needs: get-version
+    needs: [get-version, create-tag]
     runs-on: ubuntu-latest
     steps:
       - name: Fetch Repository
@@ -252,7 +251,7 @@ jobs:
           checksum: sha256
 
   publish-crate:
-    # needs: [create-tag]
+    needs: [create-tag]
     if: ${{ inputs.check-to-publish }}
     uses: ./.github/workflows/publish.yaml
     secrets: inherit
