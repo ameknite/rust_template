@@ -164,7 +164,7 @@ jobs:
       - uses: mukunku/tag-exists-action@v1.6.0
         id: check-tag
         with:
-          tag: ${{  needs.get-version.outputs.tag_version }}
+          tag: ${{ needs.get-version.outputs.tag_version }}
 
       - name: Create tag
         if: steps.check-tag.outputs.exists == 'false'
