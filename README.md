@@ -9,6 +9,6 @@ Template to maintain a rust project running CI/CD with Github Workflows.
 
 ## LICENSE
 
-Distributed under the terms of the [Mozilla Public License, version 2.0](LICENSE-MPL-2.0).
+Distributed under the terms of the [Mozilla Public License Version 2.0](LICENSE-MPL-2.0).
 
 SPDX-License-Identifier: MPL-2.0
