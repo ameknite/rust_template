@@ -138,7 +138,6 @@ jobs:
   #     commit_message: ${{ needs.get-version.outputs.crate_version }}
 
   delete-tag:
-    if: ${{ inputs.release_type == 'none' }}
     needs: [get-version]
     runs-on: ubuntu-latest
     steps:
@@ -147,13 +146,8 @@ jobs:
 
       - run: git pull
 
-      - uses: mukunku/tag-exists-action@v1.6.0
-        id: check-tag
-        with:
-          tag: ${{  needs.get-version.outputs.tag_version }}
-
       - name: Delete tag
-        if: steps.check-tag.outputs.exists == 'true'
+        if: ${{ inputs.release_type == 'none' }}
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
