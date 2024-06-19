@@ -221,7 +221,7 @@ jobs:
           target: ${{ matrix.target }}
 
       - name: Install cross-compilation tools
-        if: ${{ matrix.cross }} == 'true'
+        if: ${{ matrix.cross == 'true' }}
         uses: taiki-e/setup-cross-toolchain-action@v1
         with:
           target: ${{ matrix.target }}
