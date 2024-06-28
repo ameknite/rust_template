@@ -1,7 +1,7 @@
 # Rust CI/CD template
 
-[![License](https://img.shields.io/badge/license-MPL--2.0-blue.svg)](https://github.com/ameknite/rust-ci-cd-template?tab=readme-ov-file#license)
-[![Crates.io](https://img.shields.io/crates/v/ame-rust-template.svg)](https://crates.io/crates/rust-ci-cd-template)
+[![License](https://img.shields.io/badge/license-MPL--2.0-blue.svg)](https://github.com/ameknite/ame_rust_template?tab=readme-ov-file#license)
+[![Crates.io](https://img.shields.io/crates/v/ame_rust_template.svg)](https://crates.io/crates/ame_rust_template)
 [![Minimum Supported Rust Version](https://img.shields.io/badge/MSRV-1.59.0+-red.svg)](./Cargo.toml#L8)
 [![CI](https://github.com/ameknite/ame_rust_template/actions/workflows/ci.yaml/badge.svg)](https://github.com/ameknite/ame_rust_template/actions/workflows/ci.yaml)
 
