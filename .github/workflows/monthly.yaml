@@ -14,4 +14,5 @@ jobs:
     with:
       release_type: none
       check-to-publish: false
+      overwrite-tag: true
     secrets: inherit
