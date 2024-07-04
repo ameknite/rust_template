@@ -192,12 +192,12 @@ jobs:
           allow-missing-changelog: true
           ref: refs/tags/${{ needs.get-version.outputs.tag_version }}
 
-  check-if-bin:
+  check-crate-type:
     uses: ./.github/workflows/crate_type.yaml
 
   build-and-release:
-    needs: [get-version, create-release, check-if-bin]
-    if: ${{ needs.check-if-bin.outputs.is_bin == 'true' }}
+    needs: [get-version, create-release, check-crate-type]
+    if: ${{ needs.check-crate-type.outputs.is_bin == 'true' }}
     name: ${{ matrix.target }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
