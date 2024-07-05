@@ -128,7 +128,7 @@ jobs:
     uses: ./.github/workflows/cargo_semver_checks.yaml
     with:
       bump-version: ${{ needs.get-version.outputs.crate_version }}
-      overwrite-tag: ${{ inputs.overwrite-tag }}
+      run-checks: ${{ !inputs.overwrite-tag }}
 
   bump-version:
     needs: [get-version, cargo-semver-checks]

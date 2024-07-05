@@ -6,7 +6,7 @@ on:
       bump-version:
         type: string
         required: true
-      overwrite-tag:
+      run-checks:
         type: boolean
   workflow_dispatch:
     inputs:
@@ -24,11 +24,11 @@ on:
 
 jobs:
   check-if-lib:
-    if: ${{ !inputs.overwrite-tag == 'true' }}
+    if: ${{ run-checks == 'true' }}
     uses: ./.github/workflows/crate_type.yaml
 
   get-baseline:
-    if: ${{ !inputs.overwrite-tag == 'true' }}
+    if: ${{ run-checks == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Fetch Repository
