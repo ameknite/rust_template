@@ -124,20 +124,20 @@ jobs:
       commit_message: ${{  needs.get-version.outputs.crate_version }}
 
   cargo-semver-checks:
-    if: ${{ !inputs.overwrite-tag == 'true' }}
     needs: [get-version, run-ci]
     uses: ./.github/workflows/cargo_semver_checks.yaml
     with:
       bump-version: ${{ needs.get-version.outputs.crate_version }}
+      overwrite-tag: ${{ inputs.overwrite-tag }}
 
   bump-version:
-    needs: [get-version, run-ci]
+    needs: [get-version, cargo-semver-checks]
     uses: ./.github/workflows/bump_version.yaml
     with:
       crate-version: ${{  needs.get-version.outputs.crate_version }}
 
   update-attributions:
-    needs: [get-version, run-ci]
+    needs: [get-version, bump-version]
     uses: ./.github/workflows/cargo_attribution.yaml
     with:
       commit_message: ${{ needs.get-version.outputs.crate_version }}
