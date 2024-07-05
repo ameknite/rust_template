@@ -6,7 +6,7 @@ on:
       bump-version:
         type: string
         required: true
-      run:
+      overwrite-tag:
         type: boolean
   workflow_dispatch:
     inputs:
@@ -49,7 +49,7 @@ jobs:
 
   cargo-semver-checks:
     needs: [check-if-lib, get-baseline]
-    if: ${{ needs.check-if-lib.outputs.is_lib == 'true' && needs.get-baseline.outputs.baseline != '' && inputs.run == 'true' }}
+    if: ${{ needs.check-if-lib.outputs.is_lib == 'true' && needs.get-baseline.outputs.baseline != '' && !inputs.overwrite-tag == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Fetch Repository
@@ -67,8 +67,8 @@ jobs:
           tool: cargo-bump
 
       - name: Run cargo bump
-        if: ${{ inputs.bump-version || inputs.release_type != 'none'}}
-        run: cargo bump ${{ inputs.bump-version || inputs.release_type}}
+        if: ${{ inputs.bump-version || inputs.release_type != 'none' }}
+        run: cargo bump ${{ inputs.bump-version || inputs.release_type }}
 
       - name: Install cargo-semver-checks
         uses: taiki-e/install-action@v2
