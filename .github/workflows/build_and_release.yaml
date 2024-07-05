@@ -112,7 +112,7 @@ jobs:
     outputs:
       tag_version: ${{ inputs.version || steps.new_version.outputs.normal_tag_version || steps.current_version.outputs.normal_tag_version }}
       crate_version: ${{ steps.full_version.outputs.normal_crate_version || steps.new_version.outputs.new_version || steps.current_version.outputs.current_version }}
-      
+
   check-crate-type:
     uses: ./.github/workflows/crate_type.yaml
 
