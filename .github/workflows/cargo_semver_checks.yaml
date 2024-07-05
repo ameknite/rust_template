@@ -24,11 +24,11 @@ on:
 
 jobs:
   check-if-lib:
-    if: ${{ run == 'true' }}
+    if: ${{ inputs.run == 'true' }}
     uses: ./.github/workflows/crate_type.yaml
 
   get-baseline:
-    if: ${{ run == 'true' }}
+    if: ${{ inputs.run == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Fetch Repository
