@@ -13,6 +13,6 @@ jobs:
     uses: ./.github/workflows/build_and_release.yaml
     with:
       release_type: none
-      check-to-publish: false
+      publish: false
       overwrite-tag: true
     secrets: inherit
