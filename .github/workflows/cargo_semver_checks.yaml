@@ -21,6 +21,8 @@ on:
           - patch
           - minor
           - major
+      overwrite-tag:
+        type: boolean
 
 jobs:
   check-if-lib:
