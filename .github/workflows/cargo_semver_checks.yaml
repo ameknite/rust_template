@@ -6,7 +6,7 @@ on:
       bump-version:
         type: string
         required: true
-      run-checks:
+      run:
         type: boolean
   workflow_dispatch:
     inputs:
@@ -24,11 +24,11 @@ on:
 
 jobs:
   check-if-lib:
-    if: ${{ run-checks == 'true' }}
+    if: ${{ run == 'true' }}
     uses: ./.github/workflows/crate_type.yaml
 
   get-baseline:
-    if: ${{ run-checks == 'true' }}
+    if: ${{ run == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Fetch Repository
