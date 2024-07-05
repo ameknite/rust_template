@@ -51,7 +51,7 @@ jobs:
 
   cargo-semver-checks:
     needs: [check-if-lib, get-baseline]
-    if: ${{ needs.check-if-lib.outputs.is_lib == 'true' && needs.get-baseline.outputs.baseline != '' && !inputs.overwrite-tag == 'true' }}
+    if: ${{ needs.check-if-lib.outputs.is_lib == 'true' && needs.get-baseline.outputs.baseline != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Fetch Repository
@@ -78,4 +78,5 @@ jobs:
           tool: cargo-semver-checks
 
       - name: Run cargo-semver-checks
+        if: ${{ inputs.overwrite-tag == 'false' }}
         run: cargo semver-checks --baseline-rev ${{ needs.get-baseline.outputs.baseline }};
