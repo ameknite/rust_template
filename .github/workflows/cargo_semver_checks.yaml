@@ -51,7 +51,7 @@ jobs:
             echo "tag=$tag" >> "$GITHUB_OUTPUT";
             previous_tag=$(git tag --list --sort=refname | grep -B1 "^$tag$" | head -n1);
             echo "previous_tag: $previous_tag";
-            # Check if tags are equal
+            # Skip semver-checks if tags are equal
             if [ "$previous_tag" = "$tag" ]; then
               hash=''
             else
