@@ -50,9 +50,9 @@ jobs:
           echo $current_tag;
           previous_tag=$(current_tag=$(git describe --tags) && git tag --list --sort=refname | grep -B1 "^$current_tag$" | head -n1);
           echo $previous_tag;
-          previous_hash=$(git rev-parse "$previous_tag" 2>/dev/null || git rev-parse "$current_tag")
+          hash=$(git rev-parse "$previous_tag" 2>/dev/null || git rev-parse "$current_tag")
           echo $previous_hash;
-          echo "baseline=$previous_hash" >> "$GITHUB_OUTPUT";
+          echo "baseline=$hash" >> "$GITHUB_OUTPUT";
 
       - name: print if skip cargo-semver-checks
         if: ${{ steps.get_baseline_hash.outputs.baseline == '' }}
