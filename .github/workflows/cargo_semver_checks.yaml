@@ -11,7 +11,14 @@ on:
       bump-version:
         description: "Bump version: (e.g. -> 3.6.1)"
         type: string
-        required: true
+      release_type:
+        type: choice
+        default: none
+        options:
+          - none
+          - patch
+          - minor
+          - major  
 
 jobs:
   check-if-lib:
@@ -49,7 +56,7 @@ jobs:
               hash=$(git rev-parse "$previous_tag" 2>/dev/null || echo '')
             fi
           else
-            echo "Tag doesn't exist, it will use the latest crate version as tag"
+            echo "Tag doesn't exist, it will use the latest crate version as the latest_tag"
             latest_tag=v$(cargo metadata --format-version=1 --no-deps | jql '"packages"|>"version"<|[0]' --raw-string);
             echo "latest_tag: $latest_tag"
             hash=$(git rev-parse "$latest_tag" 2>/dev/null || echo '')
@@ -79,12 +86,14 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1
 
       - name: Install cargo-bump
+        if: ${{ inputs.bump-version || inputs.release_type != 'none' }}
         uses: taiki-e/install-action@v2
         with:
           tool: cargo-bump
 
       - name: Run cargo bump
-        run: cargo bump ${{ inputs.bump-version }}
+        if: ${{ inputs.bump-version || inputs.release_type != 'none' }}
+        run: cargo bump ${{ inputs.bump-version || inputs.release_type }}
 
       - name: Install cargo-semver-checks
         uses: taiki-e/install-action@v2
