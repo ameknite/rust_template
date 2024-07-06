@@ -59,7 +59,7 @@ jobs:
             echo "Tag doesn't exist, it will use the latest crate version as the latest_tag"
             latest_tag=v$(cargo metadata --format-version=1 --no-deps | jql '"packages"|>"version"<|[0]' --raw-string);
             echo "latest_tag: $latest_tag"
-            hash=$(git rev-parse "$latest_tag")
+            hash=$(git rev-parse "$latest_tag" 2>/dev/null || echo '')
           fi
           echo "hash: $hash";
           echo "baseline=$hash" >> "$GITHUB_OUTPUT";
