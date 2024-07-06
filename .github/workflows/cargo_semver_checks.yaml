@@ -6,21 +6,12 @@ on:
       bump-version:
         type: string
         required: true
-      overwrite-tag:
-        type: boolean
   workflow_dispatch:
     inputs:
       bump-version:
         description: "Bump version: (e.g. -> 3.6.1)"
         type: string
-      release_type:
-        type: choice
-        default: none
-        options:
-          - none
-          - patch
-          - minor
-          - major
+        required: true
 
 jobs:
   check-if-lib:
@@ -42,15 +33,25 @@ jobs:
       - name: Current versions
         id: get_baseline_hash
         run: |
-          version=$(cargo metadata --format-version=1 --no-deps | jql '"packages"|>"version"<|[0]' --raw-string);
-          echo $version;
-          current_tag=v$version;
-          echo $current_tag;
-          previous_tag=$(current_tag=$(git describe --tags) && git tag --list --sort=refname | grep -B1 "^$current_tag$" | head -n1);
-          echo $previous_tag;
-          hash=$(git rev-parse "$previous_tag" 2>/dev/null || echo '')
-          echo $hash;
-          echo "baseline=$hash" >> "$GITHUB_OUTPUT";
+          bump_version=${{ inputs.bump-version }}
+          echo "bump_version: $bump_version"
+          tag=v$bump_version
+          echo "tag: $tag"
+
+          if git rev-parse --verify $tag >/dev/null 2>&1; then
+            previous_tag=$(current_tag=$(git describe --tags) && git tag --list --sort=refname | grep -B1 "^$tag$" | head -n1);
+            echo "previous_tag: $previous_tag";
+            hash=$(git rev-parse "$previous_tag" 2>/dev/null || echo '')
+            echo "hash: $hash";
+            echo "baseline=$hash" >> "$GITHUB_OUTPUT";
+          else
+            # If the tag doesn't exist because it is a new tag, it uses the latest tag.
+            latest_tag=v$(cargo metadata --format-version=1 --no-deps | jql '"packages"|>"version"<|[0]' --raw-string);
+            echo "latest_tag: $latest_tag"
+            hash=$(git rev-parse "$latest_tag" 2>/dev/null || echo '')
+            echo "hash: $hash";
+            echo "baseline=$hash" >> "$GITHUB_OUTPUT";
+          fi
 
       - name: print if skip cargo-semver-checks
         if: ${{ steps.get_baseline_hash.outputs.baseline == '' }}
@@ -72,14 +73,12 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1
 
       - name: Install cargo-bump
-        if: ${{ inputs.bump-version || inputs.release_type != 'none' }}
         uses: taiki-e/install-action@v2
         with:
           tool: cargo-bump
 
       - name: Run cargo bump
-        if: ${{ inputs.bump-version || inputs.release_type != 'none' }}
-        run: cargo bump ${{ inputs.bump-version || inputs.release_type }}
+        run: cargo bump ${{ inputs.bump-version }}
 
       - name: Install cargo-semver-checks
         uses: taiki-e/install-action@v2
