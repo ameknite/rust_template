@@ -81,7 +81,7 @@ jobs:
           echo -e "\n"
           echo "4  You are screw if you use a lower bump_version of a non existent tag"
           echo "because it will run, but the baseline will be the latest tag and"
-          echo "the check will just pass :)"
+          echo "the check will just pass and this will not print :)"
 
     outputs:
       baseline: ${{ steps.get_baseline_hash.outputs.baseline }}
