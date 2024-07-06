@@ -48,8 +48,8 @@ jobs:
           echo $current_tag;
           previous_tag=$(current_tag=$(git describe --tags) && git tag --list --sort=refname | grep -B1 "^$current_tag$" | head -n1);
           echo $previous_tag;
-          hash=$(git rev-parse "$previous_tag" 2>/dev/null || git rev-parse "$current_tag")
-          echo $previous_hash;
+          hash=$(git rev-parse "$previous_tag" 2>/dev/null || '')
+          echo $hash;
           echo "baseline=$hash" >> "$GITHUB_OUTPUT";
 
       - name: print if skip cargo-semver-checks
@@ -60,7 +60,7 @@ jobs:
 
   cargo-semver-checks:
     needs: [check-if-lib, get-baseline]
-    if: ${{ needs.check-if-lib.outputs.is_lib == 'true' }}
+    if: ${{ needs.check-if-lib.outputs.is_lib == 'true' && needs.get-baseline.outputs.baseline != '' }}
     runs-on: ubuntu-latest
     steps:
       - name: Fetch Repository
