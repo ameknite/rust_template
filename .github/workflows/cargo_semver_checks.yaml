@@ -21,8 +21,6 @@ on:
           - patch
           - minor
           - major
-      overwrite-tag:
-        type: boolean
 
 jobs:
   check-if-lib:
@@ -89,5 +87,4 @@ jobs:
           tool: cargo-semver-checks
 
       - name: Run cargo-semver-checks
-        if: ${{ inputs.overwrite-tag == 'false' }}
         run: cargo semver-checks --baseline-rev ${{ needs.get-baseline.outputs.baseline }};
