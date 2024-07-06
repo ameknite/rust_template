@@ -36,16 +36,27 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get latest sha-commit from previous tag
+      - name: Install jql
+        uses: taiki-e/install-action@v2
+        with:
+          tool: jql
+
+      - name: Current versions
         id: get_baseline_sha
         run: |
-          latest_sha=$(git rev-list --tags --max-count=1)
-          echo $latest_sha
-          echo "baseline=$latest_sha" >> "$GITHUB_OUTPUT";
+          version=$(cargo metadata --format-version=1 --no-deps | jql '"packages"|>"version"<|[0]' --raw-string);
+          echo $version;
+          current_tag=v$version;
+          echo $current_tag;
+          previous_tag=$(current_tag=$(git describe --tags) && git tag --list --sort=refname | grep -B1 "^$current_tag$" | head -n1);
+          echo $previous_tag;
+          previous_sha=git rev-parse "$previous_tag"
+          echo $previous_sha;
+          echo "baseline=$previous_sha" >> "$GITHUB_OUTPUT";
 
       - name: print if skip cargo-semver-checks
         if: ${{ steps.get_baseline_sha.outputs.baseline == '' }}
-        run: echo "semver-checks needs a baseline. The baseline is the latest commit of the previous tag"
+        run: echo "semver-checks needs a baseline. The baseline is the latest commit(hash) of the previous tag"
     outputs:
       baseline: ${{ steps.get_baseline_sha.outputs.baseline }}
 
