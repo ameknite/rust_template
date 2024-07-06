@@ -45,6 +45,7 @@ jobs:
           tag=v$bump_version
           echo "tag: $tag"
 
+          # Check if tag exists
           if git rev-parse --verify $tag >/dev/null 2>&1; then
             echo "tag exists."
             echo "tag=$tag" >> "$GITHUB_OUTPUT";
