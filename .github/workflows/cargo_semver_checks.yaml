@@ -48,7 +48,7 @@ jobs:
           echo $current_tag;
           previous_tag=$(current_tag=$(git describe --tags) && git tag --list --sort=refname | grep -B1 "^$current_tag$" | head -n1);
           echo $previous_tag;
-          hash=$(git rev-parse "$previous_tag" 2>/dev/null || '')
+          hash=$(git rev-parse "$previous_tag" 2>/dev/null || echo '')
           echo $hash;
           echo "baseline=$hash" >> "$GITHUB_OUTPUT";
 
