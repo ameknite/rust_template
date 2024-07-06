@@ -87,6 +87,8 @@ jobs:
           normal_version=v$version
           echo $normal_version;
           echo "tag_version=$normal_version" >> "$GITHUB_OUTPUT";
+          echo "overwrite-tag"
+          echo ${{ inputs.overwrite-tag == 'true' }}
 
       - name: Versions using release_type
         id: new_version
@@ -108,7 +110,6 @@ jobs:
           echo $tag;
           echo "crate_version=${tag##v} >> GITHUB_OUTPUT";
           echo ${tag##v};
-          echo ${{ inputs.overwrite-tag == 'true' }}
 
     outputs:
       new_tag_version: ${{ inputs.version || steps.new_version.outputs.tag_version || steps.none_version.outputs.tag_version }}
