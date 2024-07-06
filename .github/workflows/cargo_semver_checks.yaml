@@ -53,13 +53,13 @@ jobs:
             if [ "$previous_tag" = "$tag" ]; then
               hash=''
             else
-              hash=$(git rev-parse "$previous_tag" 2>/dev/null || echo '')
+              hash=$(git rev-parse "$previous_tag")
             fi
           else
             echo "Tag doesn't exist, it will use the latest crate version as the latest_tag"
             latest_tag=v$(cargo metadata --format-version=1 --no-deps | jql '"packages"|>"version"<|[0]' --raw-string);
             echo "latest_tag: $latest_tag"
-            hash=$(git rev-parse "$latest_tag" 2>/dev/null || echo '')
+            hash=$(git rev-parse "$latest_tag")
           fi
           echo "hash: $hash";
           echo "baseline=$hash" >> "$GITHUB_OUTPUT";
