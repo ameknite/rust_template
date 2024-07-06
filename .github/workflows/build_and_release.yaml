@@ -220,7 +220,7 @@ jobs:
       - name: Fetch Repository
         uses: actions/checkout@v4
         with:
-          ref: ${{  needs.get-version.outputs.new_tag_version }}
+          ref: ${{ needs.get-version.outputs.new_tag_version }}
 
       - name: Install stable toolchain
         uses: actions-rust-lang/setup-rust-toolchain@v1
