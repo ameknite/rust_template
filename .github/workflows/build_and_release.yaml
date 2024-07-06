@@ -154,7 +154,7 @@ jobs:
       - run: git pull
 
       - uses: mukunku/tag-exists-action@v1.6.0
-        if: ${{ !inputs.overwrite-tag == 'true' }}
+        if: ${{ inputs.overwrite-tag == 'true' }}
         id: check-tag-overwrite
         with:
           tag: ${{  needs.get-version.outputs.new_tag_version }}
