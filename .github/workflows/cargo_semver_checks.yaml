@@ -39,7 +39,7 @@ jobs:
           echo "tag: $tag"
 
           if git rev-parse --verify $tag >/dev/null 2>&1; then
-            echo "tag doesn't exists."
+            echo "tag exists."
             echo "tag=$tag" >> "$GITHUB_OUTPUT";
             previous_tag=$(git tag --list --sort=refname | grep -B1 "^$tag$" | head -n1);
             echo "previous_tag: $previous_tag";
@@ -49,7 +49,7 @@ jobs:
               hash=$(git rev-parse "$previous_tag" 2>/dev/null || echo '')
             fi
           else
-            echo "If the tag doesn't exist because it is a new tag, it uses the latest tag"
+            echo "Tag doesn't exist, it will use the latest crate version as tag"
             latest_tag=v$(cargo metadata --format-version=1 --no-deps | jql '"packages"|>"version"<|[0]' --raw-string);
             echo "latest_tag: $latest_tag"
             hash=$(git rev-parse "$latest_tag" 2>/dev/null || echo '')
