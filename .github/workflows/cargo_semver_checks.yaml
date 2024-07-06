@@ -43,10 +43,10 @@ jobs:
           bump_version=${{ inputs.bump-version }}
           echo "bump_version: $bump_version"
           tag=v$bump_version
-          echo "tag: $tag"
 
           # Check if tag exists
           if git rev-parse --verify $tag >/dev/null 2>&1; then
+            echo "tag: $tag"
             echo "tag exists."
             echo "tag=$tag" >> "$GITHUB_OUTPUT";
             previous_tag=$(git tag --list --sort=refname | grep -B1 "^$tag$" | head -n1);
