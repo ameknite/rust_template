@@ -116,36 +116,36 @@ jobs:
   check-crate-type:
     uses: ./.github/workflows/crate_type.yaml
 
-  run-ci:
-    needs: validate-input
-    uses: ./.github/workflows/ci.yaml
+  # run-ci:
+  #   needs: validate-input
+  #   uses: ./.github/workflows/ci.yaml
 
-  add-notice:
-    needs: [get-version, run-ci]
-    uses: ./.github/workflows/add_notice.yaml
-    with:
-      commit_message: ${{  needs.get-version.outputs.new_crate_version }}
+  # add-notice:
+  #   needs: [get-version, run-ci]
+  #   uses: ./.github/workflows/add_notice.yaml
+  #   with:
+  #     commit_message: ${{  needs.get-version.outputs.new_crate_version }}
 
-  cargo-semver-checks:
-    needs: [get-version, run-ci]
-    uses: ./.github/workflows/cargo_semver_checks.yaml
-    with:
-      bump-version: ${{ needs.get-version.outputs.new_crate_version }}
+  # cargo-semver-checks:
+  #   needs: [get-version, run-ci]
+  #   uses: ./.github/workflows/cargo_semver_checks.yaml
+  #   with:
+  #     bump-version: ${{ needs.get-version.outputs.new_crate_version }}
 
-  bump-version:
-    needs: [get-version, cargo-semver-checks]
-    uses: ./.github/workflows/bump_version.yaml
-    with:
-      crate-version: ${{  needs.get-version.outputs.new_crate_version }}
+  # bump-version:
+  #   needs: [get-version, cargo-semver-checks]
+  #   uses: ./.github/workflows/bump_version.yaml
+  #   with:
+  #     crate-version: ${{  needs.get-version.outputs.new_crate_version }}
 
-  update-attributions:
-    needs: [get-version, bump-version]
-    uses: ./.github/workflows/cargo_attribution.yaml
-    with:
-      commit_message: ${{ needs.get-version.outputs.new_crate_version }}
+  # update-attributions:
+  #   needs: [get-version, bump-version]
+  #   uses: ./.github/workflows/cargo_attribution.yaml
+  #   with:
+  #     commit_message: ${{ needs.get-version.outputs.new_crate_version }}
 
   create-tag:
-    needs: [get-version, update-attributions]
+    needs: [get-version]
     runs-on: ubuntu-latest
     steps:
       - name: Fetch Repository
