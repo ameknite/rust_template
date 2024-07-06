@@ -60,7 +60,7 @@ jobs:
           else
             echo "Tag doesn't exist, it will use the latest crate version as the baseline tag"
             latest_tag=v$(cargo metadata --format-version=1 --no-deps | jql '"packages"|>"version"<|[0]' --raw-string);
-            echo "latest_tag: $latest_tag"
+            echo "baseline_tag: $latest_tag"
             # This allow to skip semver-checks when there is not tags.
             hash=$(git rev-parse "$latest_tag" 2>/dev/null || echo '')
           fi
