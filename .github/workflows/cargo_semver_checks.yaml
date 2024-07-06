@@ -80,7 +80,7 @@ jobs:
           echo "3  There is not bump version and you release_type=none"
           echo -e "\n"
           echo "4  You are screw if you use a lower bump_version of a non existent tag"
-          echo "because it will run, but the baseline will be the latest tag and"
+          echo "because it will run, but the baseline will be the latest tag"
           echo "the check will just pass and this will not print :)"
 
     outputs:
