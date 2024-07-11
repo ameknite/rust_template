@@ -14,5 +14,5 @@ jobs:
     with:
       release_type: none
       publish: false
-      overwrite-tag: true
+      overwrite_tag: true
     secrets: inherit
