@@ -22,8 +22,9 @@ jobs:
       - uses: cargo-bins/cargo-binstall@main
 
       - name: Install cargo-msrv
-        # waiting for the stable release
-        run: cargo binstall cargo-msrv
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-msrv
 
       - name: Get msrv data
         id: data-msrv
