@@ -5,7 +5,7 @@ version = "0.1.0"
 edition = "2021"
 license = "MPL-2.0"
 repository = "https://github.com/ameknite/ame-rust-template" # todo!("Change repository")
-rust-version = "1.59.0"                                      # todo!("Change MSRV")
+rust-version = "1.81.0"                                      # todo!("Change MSRV")
 
 [dependencies]
 
@@ -36,3 +36,4 @@ missing_panics_doc = "allow"
 # restriction
 undocumented_unsafe_blocks = "warn"
 multiple_unsafe_ops_per_block = "warn"
+allow_attributes = "warn"
