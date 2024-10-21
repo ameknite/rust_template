@@ -26,6 +26,7 @@ jobs:
         uses: taiki-e/install-action@v2
         with:
           tool: cargo-attribution
+          fallback: none
 
       - name: Run cargo attribution
         run: |
