@@ -28,11 +28,10 @@ jobs:
           tool: cargo-binstall
 
       - name: Install cargo-attribution
-        run: cargo binstall cargo-attribution --target x86_64-unknown-linux-gnu
+        run: cargo binstall cargo-attribution --target x86_64-unknown-linux-gnu --force
 
       - name: Run cargo attribution
         run: |
-          echo $(ldd --version)
           ldd --version
           cargo attribution
 
