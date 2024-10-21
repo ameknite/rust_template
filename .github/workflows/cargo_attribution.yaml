@@ -28,9 +28,7 @@ jobs:
           tool: cargo-attribution
 
       - name: Run cargo attribution
-        run: |
-          echo $(ldd --version)
-          cargo attribution
+        run: cargo attribution
 
       - name: Commit and Push
         uses: stefanzweifel/git-auto-commit-action@v5
