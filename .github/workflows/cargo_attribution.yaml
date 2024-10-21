@@ -23,10 +23,7 @@ jobs:
         uses: actions-rust-lang/setup-rust-toolchain@v1
 
       - name: Install cargo-attribution
-        uses: taiki-e/install-action@v2
-        with:
-          tool: cargo-attribution
-          fallback: none
+        run: cargo install cargo-attribution
 
       - name: Run cargo attribution
         run: |
