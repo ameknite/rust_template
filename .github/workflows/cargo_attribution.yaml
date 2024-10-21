@@ -28,7 +28,7 @@ jobs:
           tool: cargo-binstall
 
       - name: Install cargo-attribution
-        run: cargo binstall cargo-attribution --target x86_64-unknown-linux-gnu --force
+        run: cargo binstall cargo-attribution --target x86_64-unknown-linux-gnu --force -y
 
       - name: Run cargo attribution
         run: |
